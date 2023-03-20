@@ -15,6 +15,7 @@ namespace Infrastructure.Data
             this.context = context;
         }
 
+
         public async Task<T> GetByIdAsync(int id)
         {
             return await context.Set<T>().FindAsync(id);
@@ -38,6 +39,11 @@ namespace Infrastructure.Data
         public Task ListAsync()
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<int> CountAsync(ISpecification<T> spec)
+        {
+           return await ApplySpecification(spec).CountAsync();
         }
 
         private IQueryable<T> ApplySpecification(ISpecification<T> spec)
