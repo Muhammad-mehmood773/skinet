@@ -15,37 +15,29 @@ builder.Services.AddapplicationServices(builder.Configuration);
 
 
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<StoreContext>(opt => {
-    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
 
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.Configure<ApiBehaviorOptions>(Options =>
+
+var MyAllowSpecification = "_myAllowSpecficOrigins";
+
+builder.Services.AddCors(options =>
 {
-    Options.InvalidModelStateResponseFactory = actionContext =>
-    { 
-    var errors = actionContext.ModelState
-    .Where(e => e.Value.Errors.Count > 0)
-    .SelectMany(x => x.Value.Errors)
-    .Select(x => x.ErrorMessage).ToArray();
-
-    var errorResponse = new ApiValidationErrorResponse
-    {
-        Errors = errors
-    };
-    return new BadRequestObjectResult(errorResponse);
-  };
-
+    options.AddPolicy(name: MyAllowSpecification,
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+        });
 });
+
+
+
 
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleWare>();
+
+app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
 // Configure the HTTP request pipeline.
 
@@ -55,7 +47,11 @@ app.UseSwaggerUI();
 
 app.UseStaticFiles();
 
-app.UseCors("CorsPolicy");
+
+//app.UseCors("CorsPolicy");
+  
+
+
 
 app.UseAuthorization();
 
@@ -74,7 +70,9 @@ try
 catch (Exception ex)
 {
     logger.LogError(ex, "An Error occured during migrations");
-    
+
 }
+app.UseCors(MyAllowSpecification);
 
 app.Run();
+

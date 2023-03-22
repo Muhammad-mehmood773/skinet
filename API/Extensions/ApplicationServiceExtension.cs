@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions
 {
-    public static class ApplicationServiceExtension
+    public static class ApplicationServiceExtension 
 
     {
         public static IServiceCollection AddapplicationServices(this IServiceCollection services, IConfiguration config)
@@ -38,22 +38,23 @@ namespace API.Extensions
                     {
                         Errors = errors
                     };
+
                     return new BadRequestObjectResult(errorResponse);
                 };
 
             });
 
-            services.AddCors(opt =>
-            {
-                opt.AddPolicy("CorsPolicy", policy =>
-                {
-                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
-                });
+            //services.AddCors(opt =>
+            //{
+            //    opt.AddPolicy("CorsPolicy", policy =>
+            //    {
+            //        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200/");
+            //    });
 
-            });
+            //});
 
 
-            return services;
+            return services;   
         }
     }
 }
