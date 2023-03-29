@@ -10,3 +10,12 @@
     right: 32px;
     border-radius: 50%;
 }
+
+a {
+    color: #343a40;
+    text-decoration: none;
+
+    &.active {
+        color: orange;
+    }
+}

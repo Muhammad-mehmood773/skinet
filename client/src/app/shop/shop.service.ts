@@ -30,6 +30,10 @@ export class ShopService {
     return this.http.get<Pagination<Product[]>>(this.BaseUrl + "products" ,{params});
   }
 
+  getProducts(id: number){
+    return this.http.get<Product>(this.BaseUrl + "products/" + id);
+  }
+
   getBrands(){
     return this.http.get<Brands[]>(this.BaseUrl + "products/brands");
   }
