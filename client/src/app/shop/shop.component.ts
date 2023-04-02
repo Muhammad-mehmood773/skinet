@@ -12,17 +12,23 @@ import { ShopParams } from '../shared/models/shopParams';
   styleUrls: ['./shop.component.scss']
 })
 export class ShopComponent implements OnInit {
+  
   @ViewChild('search') searchTerm?: ElementRef;
+  
   products: Product[] = [];
   brands: Brands[] = [];
   types: Type[]= [];
+  
   shopParams = new ShopParams();
+  
   sortSelector = 'name';
+  
   sortOptions = [
     {name: 'Alphabetical', value: 'name'},
     {name: 'Price: Low to High', value: "priceAsc"},
     {name: 'Price: High to Low', value: "priceDesc"}
   ];
+  
   totalCount = 0;
 
   constructor (private shopService: ShopService) {}
@@ -50,7 +56,7 @@ export class ShopComponent implements OnInit {
 
   getBrands(){
     this.shopService.getBrands().subscribe({
-      next: response => this.brands = [{Id: 0, name: 'All'}, ...response],
+      next: response => this.brands = [{id: 0, name: 'All'}, ...response],
       error: response => console.log(response)
       
      })
@@ -58,7 +64,7 @@ export class ShopComponent implements OnInit {
 
   getTypes(){
     this.shopService.getTypes().subscribe({
-      next: response => this.types = [{Id: 0, name: 'All'}, ...response],
+      next: response => this.types = [{id: 0, name: 'All'}, ...response],
       error: response => console.log(response)
       
      })
