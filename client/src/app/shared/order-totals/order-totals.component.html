@@ -1,0 +1,26 @@
+
+<div class="py-3 px-4 bg-warning text-uppercase fw-bold">
+    Order summary
+</div>
+
+<div class="p-4">
+   <p class="fst-italic mb-4">Shipping costs will be calculated based on choices made on checkouts</p>
+   <ul class="list-unstyled mb-4" *ngIf="(basketService.basketTotalSource$ | async) as totals">
+
+    <li class="justify-content-between py-3 d-flex border-bottom">
+        <strong class="text-muted">Order Subtotal</strong>
+        <strong>{{totals.subtotal | currency}}</strong>
+    </li>
+
+    <li class="justify-content-between py-3 d-flex border-bottom">
+        <strong class="text-muted">Shipping and Handling</strong>
+        <strong>{{totals.shipping | currency}}</strong>
+    </li>
+
+    <li class="justify-content-between py-3 d-flex border-bottom">
+        <strong class="text-muted">Totals</strong>
+        <strong>{{totals.total | currency}}</strong>
+    </li>
+
+   </ul>
+</div>
