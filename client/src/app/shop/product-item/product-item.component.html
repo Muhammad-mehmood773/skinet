@@ -1,7 +1,7 @@
-<div class="card shadow-sm" style="border-radius: 10px;" *ngIf="product">
+<div class="card shadow" style="border-radius: 10px;" *ngIf="product">
 
   <div class="image position-relative" style="cursor: pointer;">
-  <img src="{{product.pictureUrl}}" alt="{{product.name}}" class="img-fluid">
+  <img src="{{product.pictureUrl}}" alt="{{product.name}}" class="img-fluid bg-light shadow">
     <div class="d-flex justify-content-center align-items-center hover-overlay">
       <button (click)="addItemToBasket()" class="btn btn-primary fa fa-shopping-cart me-2"></button>
       <button routerLink="/shop/{{product.id}}" class="btn btn-primary">View</button>
@@ -15,6 +15,8 @@
         {{product.name}}
       </h6>
     </a>
+    <strong>
     <span class="mb-2">{{product.price | currency}}</span>
+    </strong>
   </div>
 </div>
